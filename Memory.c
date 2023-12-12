@@ -54,13 +54,13 @@ int main(void)
     {
         PrintMemoryConditionnedZoom(TabMemory,TabEtat, row, col);
         nbredecoup++;
-        printf("\nSelect a first case : ");
+        printf("\nSelect a first case (format row/column : 00) : ");
         GetChoice(&i1,&j1,TabEtat,row,col);
         if(TabEtat[i1*col+j1]==0)
         {
             TabEtat[i1*col+j1]=1;
             PrintMemoryConditionnedZoom(TabMemory,TabEtat, row, col);
-            printf("\nSelect a second case : ");
+            printf("\nSelect a second case (format row/column : 00) : ");
             GetChoice(&i2,&j2,TabEtat,row,col);
             if(TabEtat[i2*col+j2]==0)
             {
@@ -106,6 +106,13 @@ int InitGame(char * TabMemory,int * TabEtat,int *prow,int*  pcol, int minrow,int
         printf("How many rows do you want to play with ? ");
         scanf("%d", prow);
         myfflush();
+
+        if (*prow < minrow || *prow > maxrow)
+        {
+            printf("Error: Number of rows must be between %d and %d.\n", minrow, maxrow);
+            Pause();
+        }
+        system("cls");
     }
     while(*prow<minrow || *prow>maxrow);
 
@@ -114,6 +121,13 @@ int InitGame(char * TabMemory,int * TabEtat,int *prow,int*  pcol, int minrow,int
         printf("How many columns do you want to play with ? ");
         scanf("%d", pcol);
         myfflush();
+
+        if (*pcol < mincol || *pcol > min(maxcol, 52 / (*prow)) || *pcol % 2 != 0)
+        {
+           printf("Error: Number of columns must be between %d and %d (even), and compatible with the number of rows.\n", mincol, min(maxcol, 52 / (*prow)));
+           Pause();
+        }
+        system("cls");
     }
     while((*pcol<mincol || *pcol>min(maxcol,52/(*prow)))||(*pcol%2!=0));
 
