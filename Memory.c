@@ -5,10 +5,10 @@
 
 
 
-#define MAXROW 10 // NOMBRE MAX DE LIGNE DE LA GRILLE
-#define MAXCOL 10 // NOMBRE MAX DE COLONNE DE LA GRILLE
-#define MINROW 2 // NOMBRE MIN DE LIGNE DE LA GRILLE
-#define MINCOL 2 // NOMBRE MIN DE COLONNE DE LA GRILLE
+#define MAXROW 10 // MAX NUMBER OF ROWS
+#define MAXCOL 10 // MAX NUMBER OF COLUMNS
+#define MINROW 2 // MIN NUMBER OF ROWS
+#define MINCOL 2 // MAX NUMBER OF COLUMNS
 
 #define RED 0
 #define GREEN 1
@@ -32,13 +32,14 @@ int shuffle( char * Tab, int row, int col);
 void PrintMemoryConditionned(const char * TabMemory,const int*TabEtat, int row, int col);
 void PrintMemoryConditionnedZoom(const char * TabMemory,const int*TabEtat, int row, int col);
 int GetChoice(int*pi,int*pj,const int *tab,int n, int m);
-
+void PrintWelcomeScreen(void);
 void myfflush(void);
 void Pause(void);
 int mygets(char*pS,int cap);
 
 int main(void)
 {
+    PrintWelcomeScreen();
     int i1, j1, i2, j2, row, col, TabEtat[52];
     char TabMemory[52], a,b;
     srand(time(NULL));
@@ -562,4 +563,31 @@ int mygets(char*pS,int cap)
     }
 
     return lg;
+}
+
+void PrintWelcomeScreen(void)
+{
+    system("cls"); 
+
+    // Print title
+    printf("**********************************************\n");
+    printf("*               Memory Game                  *\n");
+    printf("**********************************************\n");
+
+    // Print author
+    printf("\nAuthor: AbyssBagel aka Antonin G.\n");
+
+    // Print date
+    // You can use the time.h library to get the current date
+    // Replace the following line with your preferred way of getting the current date
+    printf("Date: 01/2022\n");
+
+    // Mention to press enter to start
+    printf("\nPress Enter to start...");
+
+    // Wait for Enter key
+    while (getchar() != '\n') {}
+
+    // Clear the console again
+    system("cls");
 }
