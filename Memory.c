@@ -3,12 +3,10 @@
 #include <windows.h>
 #include <time.h>
 
-
-
 #define MAXROW 10 // MAX NUMBER OF ROWS
 #define MAXCOL 10 // MAX NUMBER OF COLUMNS
-#define MINROW 2 // MIN NUMBER OF ROWS
-#define MINCOL 2 // MAX NUMBER OF COLUMNS
+#define MINROW 2  // MIN NUMBER OF ROWS
+#define MINCOL 2  // MAX NUMBER OF COLUMNS
 
 #define RED 0
 #define GREEN 1
@@ -21,56 +19,56 @@
 
 #define T 5
 
-void Color(int couleurDuTexte,int couleurDeFond);
+void Color(int couleurDuTexte, int couleurDeFond);
 /// Function to initialize the grid, the array is an input/output, nrow and ncol as well,
 /// minrow, maxrow, mincol and maxcol are input
-int InitGame(char * TabMemory,int * TabEtat,int *prow,int*  pcol, int minrow,int maxrow, int mincol, int maxcol);
-void PrintMemory(const char * Tab, int row, int col);
-void PrintMemoryZoom(const char * Tab, int row, int col);
-void swapchar(char *C1, char * C2);
-int shuffle( char * Tab, int row, int col);
-void PrintMemoryConditionned(const char * TabMemory,const int*TabEtat, int row, int col);
-void PrintMemoryConditionnedZoom(const char * TabMemory,const int*TabEtat, int row, int col);
-int GetChoice(int*pi,int*pj,const int *tab,int n, int m);
+int InitGame(char *TabMemory, int *TabEtat, int *prow, int *pcol, int minrow, int maxrow, int mincol, int maxcol);
+void PrintMemory(const char *Tab, int row, int col);
+void PrintMemoryZoom(const char *Tab, int row, int col);
+void swapchar(char *C1, char *C2);
+int shuffle(char *Tab, int row, int col);
+void PrintMemoryConditionned(const char *TabMemory, const int *TabEtat, int row, int col);
+void PrintMemoryConditionnedZoom(const char *TabMemory, const int *TabEtat, int row, int col);
+int GetChoice(int *pi, int *pj, const int *tab, int n, int m);
 void PrintWelcomeScreen(void);
 void myfflush(void);
 void Pause(void);
-int mygets(char*pS,int cap);
+int mygets(char *pS, int cap);
 
 int main(void)
 {
     PrintWelcomeScreen();
     int i1, j1, i2, j2, row, col, TabEtat[52];
-    char TabMemory[52], a,b;
+    char TabMemory[52], a, b;
     srand(time(NULL));
-    int nbredecoup=0, nbredecoupmax, FoundPair=0;
+    int nbredecoup = 0, nbredecoupmax, FoundPair = 0;
     InitGame(TabMemory, TabEtat, &row, &col, MINROW, MAXROW, MINCOL, MAXCOL);
     shuffle(TabMemory, row, col);
     PrintMemoryZoom(TabMemory, row, col);
-    Sleep(T*1000);
-    const int nbredepair=(row*col)/2;
-    nbredecoupmax=row*col;
+    Sleep(T * 1000);
+    const int nbredepair = (row * col) / 2;
+    nbredecoupmax = row * col;
     do
     {
-        PrintMemoryConditionnedZoom(TabMemory,TabEtat, row, col);
+        PrintMemoryConditionnedZoom(TabMemory, TabEtat, row, col);
         nbredecoup++;
         printf("\nSelect a first case (format row/column : 00) : ");
-        GetChoice(&i1,&j1,TabEtat,row,col);
-        if(TabEtat[i1*col+j1]==0)
+        GetChoice(&i1, &j1, TabEtat, row, col);
+        if (TabEtat[i1 * col + j1] == 0)
         {
-            TabEtat[i1*col+j1]=1;
-            PrintMemoryConditionnedZoom(TabMemory,TabEtat, row, col);
+            TabEtat[i1 * col + j1] = 1;
+            PrintMemoryConditionnedZoom(TabMemory, TabEtat, row, col);
             printf("\nSelect a second case (format row/column : 00) : ");
-            GetChoice(&i2,&j2,TabEtat,row,col);
-            if(TabEtat[i2*col+j2]==0)
+            GetChoice(&i2, &j2, TabEtat, row, col);
+            if (TabEtat[i2 * col + j2] == 0)
             {
-                TabEtat[i2*col+j2]=1;
-                PrintMemoryConditionnedZoom(TabMemory,TabEtat, row, col);
+                TabEtat[i2 * col + j2] = 1;
+                PrintMemoryConditionnedZoom(TabMemory, TabEtat, row, col);
                 Sleep(1000);
-                if(TabMemory[i1*col+j1]!=TabMemory[i2*col+j2])
+                if (TabMemory[i1 * col + j1] != TabMemory[i2 * col + j2])
                 {
-                    TabEtat[i1*col+j1]=0;
-                    TabEtat[i2*col+j2]=0;
+                    TabEtat[i1 * col + j1] = 0;
+                    TabEtat[i2 * col + j2] = 0;
                 }
                 else
                 {
@@ -79,14 +77,12 @@ int main(void)
             }
             else
             {
-                TabEtat[i1*col+j1]=0;
+                TabEtat[i1 * col + j1] = 0;
             }
-
         }
-    }
-    while(nbredecoup<nbredecoupmax && FoundPair!=nbredepair);
+    } while (nbredecoup < nbredecoupmax && FoundPair != nbredepair);
     PrintMemoryZoom(TabMemory, row, col);
-    if(FoundPair==nbredepair)
+    if (FoundPair == nbredepair)
     {
         printf("\nCongratulations you may have the best memory in the entire universe ! ");
     }
@@ -94,13 +90,11 @@ int main(void)
     {
         printf("\nSorry, you lost, you'll have to train your memory !");
     }
-
 }
 
-
-int InitGame(char * TabMemory,int * TabEtat,int *prow,int*  pcol, int minrow,int maxrow, int mincol, int maxcol)
+int InitGame(char *TabMemory, int *TabEtat, int *prow, int *pcol, int minrow, int maxrow, int mincol, int maxcol)
 {
-    int i,j;
+    int i, j;
     do
     {
         printf("How many rows do you want to play with ? ");
@@ -113,8 +107,7 @@ int InitGame(char * TabMemory,int * TabEtat,int *prow,int*  pcol, int minrow,int
             Pause();
         }
         system("cls");
-    }
-    while(*prow<minrow || *prow>maxrow);
+    } while (*prow < minrow || *prow > maxrow);
 
     do
     {
@@ -124,135 +117,127 @@ int InitGame(char * TabMemory,int * TabEtat,int *prow,int*  pcol, int minrow,int
 
         if (*pcol < mincol || *pcol > min(maxcol, 52 / (*prow)) || *pcol % 2 != 0)
         {
-           printf("Error: Number of columns must be between %d and %d (even), and compatible with the number of rows.\n", mincol, min(maxcol, 52 / (*prow)));
-           Pause();
+            printf("Error: Number of columns must be between %d and %d (even), and compatible with the number of rows.\n", mincol, min(maxcol, 52 / (*prow)));
+            Pause();
         }
         system("cls");
-    }
-    while((*pcol<mincol || *pcol>min(maxcol,52/(*prow)))||(*pcol%2!=0));
+    } while ((*pcol < mincol || *pcol > min(maxcol, 52 / (*prow))) || (*pcol % 2 != 0));
 
-    for(i=0; i<*prow; i++)
+    for (i = 0; i < *prow; i++)
     {
-        for(j=0; j<*pcol; j++)
+        for (j = 0; j < *pcol; j++)
         {
-            TabEtat[i*(*pcol)+j]=0;
-            TabMemory[i*(*pcol)+j]=65+((*pcol)*i+j)/2;
+            TabEtat[i * (*pcol) + j] = 0;
+            TabMemory[i * (*pcol) + j] = 65 + ((*pcol) * i + j) / 2;
         }
     }
-
 }
 
-
-void PrintMemory(const char * Tab, int row, int col)
+void PrintMemory(const char *Tab, int row, int col)
 {
-    int i,j;
+    int i, j;
     system("cls");
-    Color(WHITE,BLACK);
+    Color(WHITE, BLACK);
     printf(" ");
-    for(i=0; i<col; i++)
+    for (i = 0; i < col; i++)
     {
         printf("%d", i);
     }
     printf("\n");
-    for(i=0; i<row; i++)
+    for (i = 0; i < row; i++)
     {
         printf("%d", i);
-        for(j=0; j<col; j++)
+        for (j = 0; j < col; j++)
         {
-            if(Tab[i*col+j]>'A' && Tab[i*col+j]<'G')
+            if (Tab[i * col + j] > 'A' && Tab[i * col + j] < 'G')
             {
-                Color(Tab[i*col+j]%66+1,BLACK);
+                Color(Tab[i * col + j] % 66 + 1, BLACK);
             }
-            if(Tab[i*col+j]>'G' && Tab[i*col+j]<'M')
+            if (Tab[i * col + j] > 'G' && Tab[i * col + j] < 'M')
             {
-                Color(Tab[i*col+j]%72+1,BLACK);
+                Color(Tab[i * col + j] % 72 + 1, BLACK);
             }
-            if(Tab[i*col+j]>'M' && Tab[i*col+j]<'S')
+            if (Tab[i * col + j] > 'M' && Tab[i * col + j] < 'S')
             {
-                Color(Tab[i*col+j]%78+1,BLACK);
+                Color(Tab[i * col + j] % 78 + 1, BLACK);
             }
-            if(Tab[i*col+j]>'S' && Tab[i*col+j]<'Y')
+            if (Tab[i * col + j] > 'S' && Tab[i * col + j] < 'Y')
             {
-                Color(Tab[i*col+j]%84+1,BLACK);
+                Color(Tab[i * col + j] % 84 + 1, BLACK);
             }
-            if(Tab[i*col+j]=='A'||Tab[i*col+j]=='G'||Tab[i*col+j]=='M'||Tab[i*col+j]=='S'||Tab[i*col+j]=='Y')
+            if (Tab[i * col + j] == 'A' || Tab[i * col + j] == 'G' || Tab[i * col + j] == 'M' || Tab[i * col + j] == 'S' || Tab[i * col + j] == 'Y')
             {
-                Color(0,BLACK);
+                Color(0, BLACK);
             }
-            printf("%c", Tab[i*col+j]);
-            Color(WHITE,BLACK);
+            printf("%c", Tab[i * col + j]);
+            Color(WHITE, BLACK);
         }
         printf("\n");
     }
 }
 
-
-
-
-
-void swapchar(char *C1, char * C2)
+void swapchar(char *C1, char *C2)
 {
     char change;
-    change=*C1;
-    *C1=*C2;
-    *C2=change;
+    change = *C1;
+    *C1 = *C2;
+    *C2 = change;
 }
 
-int shuffle( char * Tab, int row, int col)
+int shuffle(char *Tab, int row, int col)
 {
-    int i,j,i2,j2;
-    for(i=0; i<row; i++)
+    int i, j, i2, j2;
+    for (i = 0; i < row; i++)
     {
-        for(j=0; j<col; j++)
+        for (j = 0; j < col; j++)
         {
-            i2=rand()%row;
-            j2=rand()%col;
-            swapchar(&Tab[i*col+j],&Tab[i2*col+j2]);
+            i2 = rand() % row;
+            j2 = rand() % col;
+            swapchar(&Tab[i * col + j], &Tab[i2 * col + j2]);
         }
     }
-
 }
 
-void PrintMemoryConditionned(const char * TabMemory,const int*TabEtat, int row, int col)
+void PrintMemoryConditionned(const char *TabMemory, const int *TabEtat, int row, int col)
 {
-    int i,j;
+    int i, j;
     system("cls");
-    Color(WHITE,BLACK);
+    Color(WHITE, BLACK);
     printf(" ");
-    for(i=0; i<col; i++)
+    for (i = 0; i < col; i++)
     {
         printf("%d", i);
     }
     printf("\n");
-    for(i=0; i<row; i++)
+    for (i = 0; i < row; i++)
     {
         printf("%d", i);
-        for(j=0; j<col; j++)
+        for (j = 0; j < col; j++)
         {
-            if(TabEtat[i*col+j]==1)
+            if (TabEtat[i * col + j] == 1)
             {
-                if(TabMemory[i*col+j]>'A' && TabMemory[i*col+j]<'G')
+                if (TabMemory[i * col + j] > 'A' && TabMemory[i * col + j] < 'G')
                 {
-                    Color(TabEtat[i*col+j]%66+1,BLACK);
+                    Color(TabEtat[i * col + j] % 66 + 1, BLACK);
                 }
-                if(TabMemory[i*col+j]>'G' && TabMemory[i*col+j]<'M')
+                if (TabMemory[i * col + j] > 'G' && TabMemory[i * col + j] < 'M')
                 {
-                    Color(TabMemory[i*col+j]%72+1,BLACK);
+                    Color(TabMemory[i * col + j] % 72 + 1, BLACK);
                 }
-                if(TabMemory[i*col+j]>'M' && TabMemory[i*col+j]<'S')
+                if (TabMemory[i * col + j] > 'M' && TabMemory[i * col + j] < 'S')
                 {
-                    Color(TabMemory[i*col+j]%78+1,BLACK);
+                    Color(TabMemory[i * col + j] % 78 + 1, BLACK);
                 }
-                if(TabMemory[i*col+j]>'S' && TabMemory[i*col+j]<'Y')
+                if (TabMemory[i * col + j] > 'S' && TabMemory[i * col + j] < 'Y')
                 {
-                    Color(TabMemory[i*col+j]%84+1,BLACK);
+                    Color(TabMemory[i * col + j] % 84 + 1, BLACK);
                 }
-                if(TabMemory[i*col+j]=='A'||TabMemory[i*col+j]=='G'||TabMemory[i*col+j]=='M'||TabMemory[i*col+j]=='S'||TabMemory[i*col+j]=='Y')
+                if (TabMemory[i * col + j] == 'A' || TabMemory[i * col + j] == 'G' || TabMemory[i * col + j] == 'M' || TabMemory[i * col + j] == 'S' || TabMemory[i * col + j] == 'Y')
                 {
-                    Color(0,BLACK);
+                    Color(0, BLACK);
                 }
-                printf("%c", TabMemory[i*col+j]);
-                Color(WHITE,BLACK);
+                printf("%c", TabMemory[i * col + j]);
+                Color(WHITE, BLACK);
             }
             else
             {
@@ -261,27 +246,24 @@ void PrintMemoryConditionned(const char * TabMemory,const int*TabEtat, int row, 
         }
         printf("\n");
     }
-
 }
 
-
-int GetChoice(int*pi,int*pj,const int * tab,int n, int m)
+int GetChoice(int *pi, int *pj, const int *tab, int n, int m)
 {
     char Choice[3];
-    Choice[0]='\0';
+    Choice[0] = '\0';
     do
     {
-        mygets(Choice,3);
+        mygets(Choice, 3);
 
-        if(Choice[0]<'0'||Choice[0]>'0'+n||Choice[1]<'0'||Choice[1]>='0'+m)
+        if (Choice[0] < '0' || Choice[0] > '0' + n || Choice[1] < '0' || Choice[1] >= '0' + m)
         {
             printf("Error, please enter a correct format : \n");
         }
-    }
-    while(Choice[0]<'0'||Choice[0]>'0'+n||Choice[1]<'0'||Choice[1]>='0'+m);
-    *pi=Choice[0]-'0';
-    *pj=Choice[1]-'0';
-    if(tab[*pi*m+*pj]==1)
+    } while (Choice[0] < '0' || Choice[0] > '0' + n || Choice[1] < '0' || Choice[1] >= '0' + m);
+    *pi = Choice[0] - '0';
+    *pj = Choice[1] - '0';
+    if (tab[*pi * m + *pj] == 1)
     {
         printf("Play carefully, this case is already visible, you lost one run \n");
         Pause();
@@ -290,51 +272,49 @@ int GetChoice(int*pi,int*pj,const int * tab,int n, int m)
     return 0;
 }
 
-
-
-void PrintMemoryZoom(const char * Tab, int row, int col)
+void PrintMemoryZoom(const char *Tab, int row, int col)
 {
-    int i,j,k,SizeCaseRow=3;
+    int i, j, k, SizeCaseRow = 3;
     system("cls");
-    Color(WHITE,BLACK);
+    Color(WHITE, BLACK);
     printf("    ");
-    for(i=0; i<col; i++)
+    for (i = 0; i < col; i++)
     {
         printf("%4d", i);
     }
     printf("\n");
-    for(i=0; i<row; i++)
+    for (i = 0; i < row; i++)
     {
-        for(k=0; k<SizeCaseRow; k++)
+        for (k = 0; k < SizeCaseRow; k++)
         {
-            if(k==SizeCaseRow/2)
+            if (k == SizeCaseRow / 2)
             {
                 printf("%4d", i);
 
-                for(j=0; j<col; j++)
+                for (j = 0; j < col; j++)
                 {
-                    if(Tab[i*col+j]>'A' && Tab[i*col+j]<'G')
+                    if (Tab[i * col + j] > 'A' && Tab[i * col + j] < 'G')
                     {
-                        Color(Tab[i*col+j]%66+1,BLACK);
+                        Color(Tab[i * col + j] % 66 + 1, BLACK);
                     }
-                    if(Tab[i*col+j]>'G' && Tab[i*col+j]<'M')
+                    if (Tab[i * col + j] > 'G' && Tab[i * col + j] < 'M')
                     {
-                        Color(Tab[i*col+j]%72+1,BLACK);
+                        Color(Tab[i * col + j] % 72 + 1, BLACK);
                     }
-                    if(Tab[i*col+j]>'M' && Tab[i*col+j]<'S')
+                    if (Tab[i * col + j] > 'M' && Tab[i * col + j] < 'S')
                     {
-                        Color(Tab[i*col+j]%78+1,BLACK);
+                        Color(Tab[i * col + j] % 78 + 1, BLACK);
                     }
-                    if(Tab[i*col+j]>'S' && Tab[i*col+j]<'Y')
+                    if (Tab[i * col + j] > 'S' && Tab[i * col + j] < 'Y')
                     {
-                        Color(Tab[i*col+j]%84+1,BLACK);
+                        Color(Tab[i * col + j] % 84 + 1, BLACK);
                     }
-                    if(Tab[i*col+j]=='A'||Tab[i*col+j]=='G'||Tab[i*col+j]=='M'||Tab[i*col+j]=='S'||Tab[i*col+j]=='Y')
+                    if (Tab[i * col + j] == 'A' || Tab[i * col + j] == 'G' || Tab[i * col + j] == 'M' || Tab[i * col + j] == 'S' || Tab[i * col + j] == 'Y')
                     {
-                        Color(0,BLACK);
+                        Color(0, BLACK);
                     }
-                    printf("%4c", Tab[i*col+j]);
-                    Color(WHITE,BLACK);
+                    printf("%4c", Tab[i * col + j]);
+                    Color(WHITE, BLACK);
                 }
             }
             else
@@ -345,59 +325,59 @@ void PrintMemoryZoom(const char * Tab, int row, int col)
     }
 }
 
-void PrintMemoryConditionnedZoom(const char * TabMemory,const int*TabEtat, int row, int col)
+void PrintMemoryConditionnedZoom(const char *TabMemory, const int *TabEtat, int row, int col)
 {
-    int i,j,k,SizeCaseRow=3;
+    int i, j, k, SizeCaseRow = 3;
     system("cls");
-    Color(WHITE,BLACK);
+    Color(WHITE, BLACK);
     printf("    ");
-    for(i=0; i<col; i++)
+    for (i = 0; i < col; i++)
     {
         printf("%4d", i);
     }
     printf("\n");
-    for(i=0; i<row; i++)
+    for (i = 0; i < row; i++)
     {
-        for(k=0; k<SizeCaseRow; k++)
+        for (k = 0; k < SizeCaseRow; k++)
         {
-            if(k==SizeCaseRow/2)
+            if (k == SizeCaseRow / 2)
             {
                 printf("%4d", i);
 
-                for(j=0; j<col; j++)
+                for (j = 0; j < col; j++)
                 {
-                    if(TabEtat[i*col+j]==1)
+                    if (TabEtat[i * col + j] == 1)
                     {
-                        if(TabMemory[i*col+j]>'A' && TabMemory[i*col+j]<'G')
+                        if (TabMemory[i * col + j] > 'A' && TabMemory[i * col + j] < 'G')
                         {
-                            Color(TabEtat[i*col+j]%66+1,BLACK);
+                            Color(TabEtat[i * col + j] % 66 + 1, BLACK);
                         }
-                        if(TabMemory[i*col+j]>'G' && TabMemory[i*col+j]<'M')
+                        if (TabMemory[i * col + j] > 'G' && TabMemory[i * col + j] < 'M')
                         {
-                            Color(TabMemory[i*col+j]%72+1,BLACK);
+                            Color(TabMemory[i * col + j] % 72 + 1, BLACK);
                         }
-                        if(TabMemory[i*col+j]>'M' && TabMemory[i*col+j]<'S')
+                        if (TabMemory[i * col + j] > 'M' && TabMemory[i * col + j] < 'S')
                         {
-                            Color(TabMemory[i*col+j]%78+1,BLACK);
+                            Color(TabMemory[i * col + j] % 78 + 1, BLACK);
                         }
-                        if(TabMemory[i*col+j]>'S' && TabMemory[i*col+j]<'Y')
+                        if (TabMemory[i * col + j] > 'S' && TabMemory[i * col + j] < 'Y')
                         {
-                            Color(TabMemory[i*col+j]%84+1,BLACK);
+                            Color(TabMemory[i * col + j] % 84 + 1, BLACK);
                         }
-                        if(TabMemory[i*col+j]=='A'||TabMemory[i*col+j]=='G'||TabMemory[i*col+j]=='M'||TabMemory[i*col+j]=='S'||TabMemory[i*col+j]=='Y')
+                        if (TabMemory[i * col + j] == 'A' || TabMemory[i * col + j] == 'G' || TabMemory[i * col + j] == 'M' || TabMemory[i * col + j] == 'S' || TabMemory[i * col + j] == 'Y')
                         {
-                            Color(0,BLACK);
+                            Color(0, BLACK);
                         }
-                        if(TabMemory[i*col+j]=='B')
+                        if (TabMemory[i * col + j] == 'B')
                         {
-                            Color(1,BLACK);
+                            Color(1, BLACK);
                         }
-                        printf("%4c", TabMemory[i*col+j]);
-                        Color(WHITE,BLACK);
+                        printf("%4c", TabMemory[i * col + j]);
+                        Color(WHITE, BLACK);
                     }
                     else
                     {
-                        printf("%4c",'?');
+                        printf("%4c", '?');
                     }
                 }
             }
@@ -410,14 +390,13 @@ void PrintMemoryConditionnedZoom(const char * TabMemory,const int*TabEtat, int r
     }
 }
 
-
 void Color(int text, int fond)
 {
     int text_color = 0;
     int fond_color = 0;
 #if defined(WIN32) || defined(WIN64)
     // to change the color of a Windows terminal
-    switch(text)
+    switch (text)
     {
     case RED:
         text_color = 12;
@@ -444,7 +423,7 @@ void Color(int text, int fond)
         text_color = 0;
         break;
     }
-    switch(fond)
+    switch (fond)
     {
     case RED:
         fond_color = 12;
@@ -471,11 +450,11 @@ void Color(int text, int fond)
         fond_color = 0;
         break;
     }
-    HANDLE H=GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(H,fond_color*16+text_color);
+    HANDLE H = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(H, fond_color * 16 + text_color);
 #else
     // to change the color of an ANSI terminal
-    switch(text)
+    switch (text)
     {
     case RED:
         text_color = 31;
@@ -502,10 +481,10 @@ void Color(int text, int fond)
         text_color = 30;
         break;
     default:
-        text_color=text;
+        text_color = text;
         break;
     }
-    switch(fond)
+    switch (fond)
     {
     case RED:
         fond_color = 41;
@@ -532,44 +511,44 @@ void Color(int text, int fond)
         fond_color = 0;
         break;
     }
-    printf("\033[0;" "%d" ";" "%dm", text_color, fond_color);
+    printf("\033[0;"
+           "%d"
+           ";"
+           "%dm",
+           text_color, fond_color);
 #endif
 }
 
 void myfflush(void)
 {
-    char c=0;
+    char c = 0;
 
-    while(c!='\n')
+    while (c != '\n')
     {
-        c=getchar();
-
+        c = getchar();
     }
 }
 
 void Pause(void)
 {
     char keypressed;
-    keypressed=getchar();
-    if(keypressed!='\n')
+    keypressed = getchar();
+    if (keypressed != '\n')
     {
         myfflush();
     }
-
-
 }
 
-
-int mygets(char*pS,int cap)
+int mygets(char *pS, int cap)
 {
-    int lg=0;
+    int lg = 0;
 
-    fgets(pS,cap,stdin);
-    lg=strlen(pS);
-    if(pS[lg-1]=='\n')
+    fgets(pS, cap, stdin);
+    lg = strlen(pS);
+    if (pS[lg - 1] == '\n')
     {
         lg--;
-        pS[lg]='\0';
+        pS[lg] = '\0';
     }
     else
     {
@@ -581,7 +560,7 @@ int mygets(char*pS,int cap)
 
 void PrintWelcomeScreen(void)
 {
-    system("cls"); 
+    system("cls");
 
     // Print title
     printf("**********************************************\n");
@@ -600,8 +579,12 @@ void PrintWelcomeScreen(void)
     printf("\nPress Enter to start...");
 
     // Wait for Enter key
-    while (getchar() != '\n') {}
+    while (getchar() != '\n')
+    {
+    }
 
     // Clear the console again
     system("cls");
 }
+
+// zehgfizjebfjizeb
